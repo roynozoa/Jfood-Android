@@ -1,4 +1,0 @@
-git add .
-git commit -m "modul -"
-git push -u origin master
-git push -u origin master

@@ -1,0 +1,2 @@
+rootProject.name='Jfood-android'
+include ':app'
