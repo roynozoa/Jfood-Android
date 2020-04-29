@@ -40,10 +40,10 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject != null) {
-                                Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 };

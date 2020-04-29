@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class LoginRequest extends StringRequest {
 
-    private static final String URL = "http://10.0.2.2/customer/login";
+    private static final String URL = "http://192.168.1.8:8080/customer/login";
     private Map<String, String> params;
 
     public LoginRequest(String email, String password, Response.Listener<String> listener) {
