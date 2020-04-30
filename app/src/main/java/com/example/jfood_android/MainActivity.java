@@ -105,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        MenuRequest menuRequest = new MenuRequest(responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(menuRequest);
 
     }
 }

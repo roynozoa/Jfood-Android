@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="244dp"
         android:layout_height="54dp"
         android:text="Daftar Makanan"
         android:textSize="30sp" />
