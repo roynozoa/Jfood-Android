@@ -1,9 +1,14 @@
 package com.example.jfood_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -11,6 +16,7 @@ import android.app.AlertDialog;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -21,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,14 +37,89 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
     private HashMap<Seller, ArrayList<Food>> childMapping = new HashMap<>();
+    private static int currentUserId;
+    private static String currentUserName;
+    private static String currentUserEmail;
+
+    private String foodlist;
+    private int foodPriceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            currentUserId = extras.getInt("currentUserId");
+            currentUserName = extras.getString("currentUserName");
+            currentUserEmail =extras.getString("currentUserEmail");
+        }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        Button orderButton = findViewById(R.id.orderButton);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        expListView = findViewById(R.id.lvExp);
+
+
+
 
         refreshList();
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,SelesaiPesananActivity.class);
+                intent.putExtra("currentUserName", currentUserName);
+                intent.putExtra("currentUserId", currentUserId);
+                startActivity(intent);
+            }
+        });
+
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+
+                Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
+                Bundle foodData = new Bundle();
+
+                int foodId = childMapping.get(listSeller.get(i)).get(i1).getId();
+                String foodName = childMapping.get(listSeller.get(i)).get(i1).getName();
+                String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
+                int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
+
+                intent.putExtra("id_food",foodId);
+                intent.putExtra("food_name",foodName);
+                intent.putExtra("food_category",foodCategory);
+                intent.putExtra("food_price",foodPrice);
+                intent.putExtra("currentUserName", currentUserName);
+                intent.putExtra("currentUserId", currentUserId);
+
+                intent.putExtras(foodData);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
+
+
     }
 
     protected void refreshList() {
@@ -111,3 +194,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
+

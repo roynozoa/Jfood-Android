@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="#000033">
+    android:background="@color/colorAccent">
 
 
     <TextView
@@ -12,7 +12,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="#00BCD4"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/semibold"
         android:textSize="17dp" />
 
 </LinearLayout>

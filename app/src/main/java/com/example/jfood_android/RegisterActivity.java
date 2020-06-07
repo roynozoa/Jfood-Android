@@ -2,10 +2,12 @@ package com.example.jfood_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -26,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText emailRegister = findViewById(R.id.emailRegister);
         final EditText passwordRegister = findViewById(R.id.passwordRegister);
         Button registerButton = findViewById(R.id.registerButton);
+        ImageView backButton = findViewById(R.id.backButton);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String name = nameRegister.getText().toString();
                 String email = emailRegister.getText().toString();
                 String password = passwordRegister.getText().toString();
+
+                if(password.length() < 8){
+                    passwordRegister.setError("Please enter minimum of 8 characters long");
+                    passwordRegister.requestFocus();
+                    return;
+                }
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -51,6 +60,14 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterRequest registerRequest = new RegisterRequest(name, email, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
             }
         });
 
